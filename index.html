@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل الإرشادي عن الهيئة القومية لسلامة الغذاء (NFSA)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Nile Delta Calm -->
+    <!-- Application Structure Plan: تم تصميم التطبيق كهيكل لوحة تحكم (Dashboard) مع قائمة تنقل جانبية ثابتة. هذا التصميم يسمح للمستخدم بالوصول السريع والمباشر إلى أي قسم دون الحاجة إلى التمرير الطويل. تم تقسيم المحتوى إلى وحدات موضوعية (الرؤية العامة، دليل الامتثال، شرح الهاسب، العقوبات، الترخيص) لتسهيل الاستيعاب وتلبية احتياجات المستخدم المختلفة، سواء كان يبحث عن فهم عام أو تفاصيل تشغيلية دقيقة أو معلومات عن العقوبات. هذا الهيكل غير الخطي يعزز بشكل كبير من قابلية الاستخدام مقارنة بالتقرير الأصلي. -->
+    <!-- Visualization & Content Choices: 
+        1. المخالفات والعقوبات -> الهدف: مقارنة شدة العقوبات المالية -> العرض: مخطط أعمدة أفقي تفاعلي -> التفاعل: أزرار لتبديل العرض بين المنشآت ذات الفرع الواحد والمتعددة الفروع، مع تحديث فوري للمخطط. تظهر تلميحات عند المرور على الأعمدة لعرض التفاصيل الدقيقة للغرامة وعقوبة الحبس. -> المبرر: تحويل جدول بيانات كثيف إلى تصور بصري فوري ومؤثر يوضح "تكلفة عدم الامتثال" بشكل لا يُنسى. -> المكتبة: Chart.js.
+        2. متطلبات القرار 11 -> الهدف: تبسيط المتطلبات المعقدة -> العرض: بطاقات تفاعلية وقوائم تحقق -> التفاعل: النقر على البطاقات يكشف عن تفاصيل إضافية. -> المبرر: تحويل النص الطويل إلى وحدات معلومات صغيرة وسهلة الهضم، مما يحول القراءة السلبية إلى عملية تعلم نشطة. -> الطريقة: HTML/CSS/JS.
+        3. مبادئ الهاسب السبعة -> الهدف: شرح نظام منهجي -> العرض: مخطط تدفق تفاعلي من 7 خطوات -> التفاعل: النقر على كل خطوة يبرزها ويعرض شرحها. -> المبرر: تبسيط مفهوم معقد وتقديمه بطريقة مرئية ومنطقية سهلة المتابعة. -> الطريقة: HTML/CSS/JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link.active {
+            background-color: #0369a1;
+            color: white;
+            transform: translateX(-5px);
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 50vh;
+            width: 100%;
+            max-width: 900px;
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <nav class="w-full md:w-64 bg-white shadow-lg p-4 md:p-6 flex flex-col flex-shrink-0">
+            <div>
+                <div class="flex items-center mb-8">
+                    <img src="https://res.cloudinary.com/dvqik0oco/image/upload/v1755374958/Image_w3mhab.png" alt="NFSA Logo" class="h-12 w-12 ml-3" onerror="this.onerror=null;this.src='https://placehold.co/48x48/ffffff/0369a1?text=NFSA';">
+                    <h1 class="text-lg font-bold text-sky-800 leading-tight">دليل إرشادي عن الهيئة القومية لسلامة الغذاء (NFSA)</h1>
+                </div>
+                <ul class="space-y-3">
+                    <li><a href="#" class="nav-link active text-lg font-semibold text-gray-700 hover:bg-sky-100 hover:text-sky-800 rounded-lg p-3 flex items-center" data-target="home">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>
+                        الرؤية العامة
+                    </a></li>
+                    <li><a href="#" class="nav-link text-lg font-semibold text-gray-700 hover:bg-sky-100 hover:text-sky-800 rounded-lg p-3 flex items-center" data-target="compliance">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" /></svg>
+                        قواعد  العامة (قرار 11)
+                    </a></li>
+                    <li><a href="#" class="nav-link text-lg font-semibold text-gray-700 hover:bg-sky-100 hover:text-sky-800 rounded-lg p-3 flex items-center" data-target="hospitality">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+                        قواعد قطاع الضيافة (قرار 12)
+                    </a></li>
+                     <li><a href="#" class="nav-link text-lg font-semibold text-gray-700 hover:bg-sky-100 hover:text-sky-800 rounded-lg p-3 flex items-center" data-target="technical-regs">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 2a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h.01a1 1 0 100-2H10zm3 0a1 1 0 000 2h.01a1 1 0 100-2H13zM7 12a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd" /></svg>
+                        لوائح فنية هامة
+                    </a></li>
+                    <li><a href="#" class="nav-link text-lg font-semibold text-gray-700 hover:bg-sky-100 hover:text-sky-800 rounded-lg p-3 flex items-center" data-target="haccp">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" /><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" /></svg>
+                        شرح نظام الهاسب
+                    </a></li>
+                    <li><a href="#" class="nav-link text-lg font-semibold text-gray-700 hover:bg-sky-100 hover:text-sky-800 rounded-lg p-3 flex items-center" data-target="penalties">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>
+                        المخالفات والعقوبات
+                    </a></li>
+                    <li><a href="#" class="nav-link text-lg font-semibold text-gray-700 hover:bg-sky-100 hover:text-sky-800 rounded-lg p-3 flex items-center" data-target="licensing">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h.01a1 1 0 100-2H10zm3 0a1 1 0 000 2h.01a1 1 0 100-2H13z" clip-rule="evenodd" /></svg>
+                        الطريق إلى الترخيص
+                    </a></li>
+                </ul>
+            </div>
+            <div class="mt-auto pt-6 border-t border-gray-200">
+                <p class="text-sm text-gray-500 text-center mb-3">إعداد وتقديم:</p>
+                <img src="https://res.cloudinary.com/dvqik0oco/image/upload/v1753625098/logo2-02_black_emfhdj.png" alt="Right Advisor Logo" class="mx-auto mb-4 h-12" onerror="this.onerror=null;this.src='https://placehold.co/180x50/000000/ffffff?text=Right+Advisor';">
+                <div id="contact-info" class="text-center text-xs text-gray-600 space-y-2">
+                    <p class="font-bold">للتواصل والاستفسارات:</p>
+                    <div class="flex items-center justify-center space-x-2 space-x-reverse">
+                        <span dir="ltr" class="font-semibold text-gray-700 text-xs">01000823808</span>
+                        <a href="https://wa.me/201000823808" target="_blank" class="text-gray-500 hover:text-green-500">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01s-.52.074-.792.372c-.272.296-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        </a>
+                        <a href="tel:+201000823808" class="text-gray-500 hover:text-sky-700">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+                        </a>
+                    </div>
+                    <p><a href="mailto:rightadvisor.eg@gmail.com" class="hover:text-sky-700">rightadvisor.eg@gmail.com</a></p>
+                    <div class="flex justify-center space-x-3 pt-2">
+                        <a href="https://www.facebook.com/rightadvisoreg" target="_blank" class="text-gray-500 hover:text-sky-700">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg>
+                        </a>
+                        <a href="https://www.linkedin.com/company/rightadvisoreg" target="_blank" class="text-gray-500 hover:text-sky-700">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.98v16h4.98v-8.396c0-2.002 1.809-2.486 2.5-2.486s2.5 1.486 2.5 2.486v8.396h4.98v-10.396c0-6-4.98-5.604-8.02-2.604v-3z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/rightadvisoreg" target="_blank" class="text-gray-500 hover:text-sky-700">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="flex-1 p-6 md:p-10 bg-gray-50 overflow-y-auto">
+
+            <section id="home" class="content-section active">
+                <h2 class="text-4xl font-bold text-sky-800 mb-4">النموذج الجديد لسلامة الغذاء في مصر</h2>
+                <p class="text-lg text-gray-600 leading-relaxed mb-8">
+                    أحدث إنشاء الهيئة القومية لسلامة الغذاء (NFSA) بموجب القانون رقم 1 لسنة 2017 تحولًا جذريًا في منظومة الرقابة. هذا التطبيق يهدف إلى تبسيط هذا الإطار الجديد، ويوضح كيف انتقلت المسؤولية من مجرد فحص المنتج النهائي إلى تطبيق أنظمة وقائية متكاملة تضمن سلامة الغذاء في جميع مراحل تداوله.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-sky-600">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">توحيد الرقابة</h3>
+                        <p class="text-gray-600">أصبحت الهيئة هي الجهة الوحيدة "دون غيرها" المسؤولة عن الرقابة على الغذاء، مما أنهى تشتت المسؤوليات ووفر مرجعية واضحة للمنشآt.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-teal-500">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">منهجية وقائية</h3>
+                        <p class="text-gray-600">الانتقال من "رد الفعل" إلى "الفعل الاستباقي" بإلزام  بتطبيق أنظمة عالمية مثل الـ HACCP لمنع المخاطر من الأساس.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-amber-500">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">مسؤولية المنشأة</h3>
+                        <p class="text-gray-600">يقع العبء الأكبر لضمان سلامة المنتج على عاتق "مشغل المنشأة الغذائية"، الذي أصبح مسؤولاً قانونيًا عن تطبيق كافة الاشتراطات.</p>
+                    </div>
+                </div>
+                <div class="mt-8 bg-white p-6 rounded-xl shadow-md border-t-4 border-sky-800">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">اللائحة التنفيذية: الدليل التشغيلي (قرار 412 لسنة 2019)</h3>
+                    <p class="text-gray-600">تعتبر هذه اللائحة هي "الدليل التشغيلي" المفصّل لقانون إنشاء الهيئة، حيث تترجم المبادئ العامة للقانون إلى إجراءات عملية. هي توضح الهيكل التنظيمي للهيئة، صلاحيات مجلس إدارتها، والآليات الدقيقة لعمليات الرقابة والتفتيش ومنح التراخيص.</p>
+                </div>
+            </section>
+
+            <section id="compliance" class="content-section">
+                <h2 class="text-4xl font-bold text-sky-800 mb-6">قواعد  العامة: قرار رقم 11 لسنة 2020</h2>
+                <p class="text-lg text-gray-600 leading-relaxed mb-8">
+                    يعتبر هذا القرار هو العمود الفقري التشغيلي لمتطلبات الهيئة. يستعرض هذا القسم أبرز الاشتراطات العملية التي يجب على كل منشأة الالتزام بها، بدءًا من تصميم المبنى وحتى تدريب العاملين.
+                </p>
+                <div class="space-y-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold text-sky-700 mb-4">1. البيئة المادية وتصميم المنشأة</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>يجب أن يمنع التصميم التلوث العرضي بفصل مناطق المواد الخام عن المنتج النهائي.</li>
+                            <li>الأرضيات والجدران والأسقف: ملساء، غير قابلة للامتصاص، وسهلة التنظيف.</li>
+                            <li>الإضاءة: كافية ومحمية لمنع تلوث الغذاء في حالة الكسر.</li>
+                            <li>التهوية: فعالة وتمنع انتقال الهواء من المناطق الملوثة إلى النظيفة.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold text-sky-700 mb-4">2. البرامج التحضيرية الأساسية</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><b>النظافة والتطهير:</b> وجود برنامج موثق يحدد المسؤوليات، المواد، والتكرار.</li>
+                            <li><b>مكافحة الآفات:</b> برنامج وقائي فعال لمنع دخول الآفات والقضاء عليها.</li>
+                            <li><b>إمدادات المياه:</b> يجب أن تكون المياه الملامسة للغذاء صالحة للشرب.</li>
+                            <li><b>إدارة المخلفات:</b> إجراءات واضحة للتخلص من المخلفات بطريقة صحية.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold text-sky-700 mb-4">3. العامل البشري: النظافة والتدريب</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>يُمنع أي شخص مريض من التعامل مع الغذاء، مع وجود نظام للإبلاغ عن الأمراض.</li>
+                            <li>يجب على العاملين ارتداء ملابس واقية ونظيفة والحفاظ على النظافة الشخصية.</li>
+                            <li>توفير مرافق كافية لغسل الأيدي، واستخدامها بشكل متكرر.</li>
+                            <li>التدريب الإلزامي والموثق لجميع متداولي الغذاء هو مسؤولية المنشأة.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="hospitality" class="content-section">
+                <h2 class="text-4xl font-bold text-sky-800 mb-6">قواعد قطاع الضيافة: قرار رقم 12 لسنة 2020 (وتعديله)</h2>
+                <p class="text-lg text-gray-600 leading-relaxed mb-8">
+                    إدراكًا للأهمية الاستراتيجية لقطاع السياحة، أصدرت الهيئة هذا القرار (المعدل بالقرار رقم 7 لسنة 2021) لوضع إطار ترخيص محدد للمنشآt الفندقية والسياحية. هذا القرار لا يلغي المتطلبات العامة، بل يضيف إليها اشتراطات إضافية لضمان أعلى مستويات السلامة في هذا القطاع الحيوي.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-sky-600">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">شرط أساسي: الترخيص أولاً</h3>
+                        <p class="text-gray-600">يُحظر على أي منشأة فندقية أو سياحية تداول الغذاء بأي شكل من الأشكال قبل الحصول على ترخيص ساري من الهيئة القومية لسلامة الغذاء.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-red-500">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">إجراء وقائي: المراجعة الهندسية المسبقة</h3>
+                        <p class="text-gray-600">يجب على  الجديدة، أو التي تقوم بتجديدات، تقديم الرسومات الهندسية للهيئة لمراجعتها والحصول على موافقة **قبل** البدء في أعمال الإنشاء لضمان التوافق مع الاشتراطات منذ البداية.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-amber-500 col-span-1 md:col-span-2">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">حالات تستدعي الإيقاف الفوري</h3>
+                        <p class="text-gray-600 mb-4">يحدد القرار بوضوح الحالات التي قد تؤدي إلى إيقاف المنشأة فورًا لوجود خطر داهم على صحة المستهلك، ومنها على سبيل المثال:</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>عدم توفر أو استخدام مياه صالحة للشرب.</li>
+                            <li>وجود خلل تصنيعي حرج يؤدي إلى احتمالية تلوث المنتج.</li>
+                            <li>انتشار الحشرات أو القوارض بشكل يستلزم إيقاف العمل للمكافحة الفورية.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="technical-regs" class="content-section">
+                <h2 class="text-4xl font-bold text-sky-800 mb-6">لوائح فنية هامة: القواعد المتخصصة لسلامة الغذاء</h2>
+                <p class="text-lg text-gray-600 leading-relaxed mb-8">
+                    بالإضافة إلى القواعد العامة، أصدرت الهيئة مجموعة من القرارات الفنية الملزمة التي تستهدف جوانب محددة من سلامة الغذاء. يستعرض هذا القسم ملخصًا لأهم هذه اللوائح التي يجب على كل منشأة الإلمام بها.
+                </p>
+                <div class="space-y-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold text-sky-700 mb-4">قواعد ترخيص وتتبع المنشآت</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><b>منشآت التخزين (قرار 4 لسنة 2022 وتعديله بقرار 10 لسنة 2022):</b> ينظم الضوابط والإجراءات والاشتراطات الفنية الواجب توافرها في المنشآت المخصصة لتخزين الغذاء للحصول على ترخيص تداول الغذاء.</li>
+                            <li><b>متطلبات تتبع الأغذية (قرار 16 لسنة 2022 وتعديله بقرار 3 لسنة 2023):</b> يضع القواعد الملزمة لتطبيق نظام تتبع فعال يغطي جميع مراحل السلسلة الغذائية، لضمان القدرة على سحب واسترجاع المنتجات بسرعة وكفاءة.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold text-sky-700 mb-4">الملوثات والمتبقيات الكيميائية</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><b>الدهون المتحولة (قرار 19 لسنة 2022 وتعديله بقرار 4 لسنة 2023):</b> يمنع استخدام الزيوت المهدرجة جزئيًا، ويضع حدًا أقصى للدهون المتحولة لا يتجاوز 2 جرام لكل 100 جرام من الدهون في المنتج النهائي.</li>
+                            <li><b>متبقيات الأدوية البيطرية (قرار 13 لسنة 2020):</b> يضع الحدود القصوى المسموح بها لمتبقيات الأدوية في المنتجات ذات الأصل الحيواني (اللحوم، الألبان، البيض).</li>
+                            <li><b>متبقيات المبيدات (قرار 6 لسنة 2021):</b> يحدد الحدود القصوى المسموح بها لمتبقيات المبيدات في المنتجات الغذائية ذات الأصل النباتي.</li>
+                            <li><b>الملوثات الكيميائية (قرار 6 لسنة 2022):</b> يحدد الحدود القصوى المسموح بها للملوثات الكيميائية المختلفة (مثل المعادن الثقيلة والسموم الفطرية) في الأغذية.</li>
+                            <li><b>الزيوت المستعملة (قرار 1 لسنة 2023):</b> ينظم آلية التعامل مع الزيوت والدهون الغذائية المستعملة لضمان عدم إعادة استخدامها بطرق تضر بصحة المستهلك.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold text-sky-700 mb-4">المكونات والمعايير الفنية</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><b>المواد المضافة (قرار 4 لسنة 2020):</b> يحدد "القائمة الإيجابية" للمواد المضافة المسموح بها (مثل الألوان والمواد الحافظة)، والحدود القصوى لاستخدامها.</li>
+                            <li><b>المواد الملامسة للغذاء (قرار 17 لسنة 2022):</b> ينظم مواد التعبئة والتغليف، لضمان عدم انتقال أي مواد ضارة من العبوة إلى الغذاء.</li>
+                            <li><b>المعايير الميكروبيولوجية (قرار 1 لسنة 2021):</b> يضع الحدود الميكروبية (للبكتيريا والفطريات) المسموح بها في مختلف فئات الأغذية.</li>
+                            <li><b>الأغذية ذات الاستخدامات التغذوية الخاصة (قرار 1 لسنة 2018 وتعديله بقرار 2 لسنة 2023):</b> يضع القواعد الخاصة بتنظيم وتسجيل وتداول الأغذية الموجهة لفئات معينة مثل الرضع أو المرضى.</li>
+                            <li><b>ملح الطعام (قرار 1 لسنة 2019 وتعديله بقرار 2 لسنة 2021):</b> يضع القواعد الملزمة لملح الطعام، بما في ذلك متطلبات التدعيم باليود.</li>
+                        </ul>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold text-sky-700 mb-4">قواعد الاستيراد والتصدير</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><b>نظام الرقابة على الواردات (قرار 7 لسنة 2020):</b> يضع نظامًا للرقابة على الأغذية المستوردة يعتمد على درجة المخاطر المرتبطة بالمنتج والدولة المصدرة.</li>
+                            <li><b>شهادة صلاحية الصادرات (قرار 1 لسنة 2020):</b> يضع القواعد الفنية الملزمة لإصدار شهادات الصلاحية للمنتجات الغذائية المصرية المصدرة.</li>
+                            <li><b>تصدير الأسماك للاتحاد الأوروبي (قرار 1 لسنة 2022):</b> ينظم قواعد تصدير الأسماك والمنتجات البحرية، لضمان توافقها مع الاشتراطات الأوروبية الصارمة.</li>
+                            <li><b>فحص رسائل الأسماك (قرار 4 لسنة 2019):</b> يحدد القواعد الفنية التي يجب مراعاتها عند الفحص المعملي لرسائل الأسماك.</li>
+                            <li><b>رسوم فحص منشآt الأحياء المائية (قرار 2 لسنة 2022):</b> يحدد رسوم مقابل خدمة فحص منشآt الأغذية التي تتداول الأحياء المائية ومنتجاتها.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="haccp" class="content-section">
+                <h2 class="text-4xl font-bold text-sky-800 mb-6">شرح نظام الهاسب (HACCP)</h2>
+                <p class="text-lg text-gray-600 leading-relaxed mb-8">
+                    نظام تحليل المخاطر ونقاط التحكم الحرجة (HACCP) هو نظام وقائي عالمي أصبح تطبيقه إلزامياً. يهدف إلى التحكم في العملية الإنتاجية بأكملها لمنع وقوع الأخطاء بدلاً من اكتشافها بعد حدوثها. تعرف على مبادئه السبعة الأساسية.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="haccp-step bg-white p-4 rounded-lg shadow-sm text-center cursor-pointer border-2 border-transparent hover:border-sky-500 hover:shadow-lg transition">
+                        <div class="text-3xl font-bold text-sky-600">1</div>
+                        <h3 class="font-semibold mt-2">تحليل المخاطر</h3>
+                    </div>
+                    <div class="haccp-step bg-white p-4 rounded-lg shadow-sm text-center cursor-pointer border-2 border-transparent hover:border-sky-500 hover:shadow-lg transition">
+                        <div class="text-3xl font-bold text-sky-600">2</div>
+                        <h3 class="font-semibold mt-2">تحديد نقاط التحكم الحرجة (CCPs)</h3>
+                    </div>
+                    <div class="haccp-step bg-white p-4 rounded-lg shadow-sm text-center cursor-pointer border-2 border-transparent hover:border-sky-500 hover:shadow-lg transition">
+                        <div class="text-3xl font-bold text-sky-600">3</div>
+                        <h3 class="font-semibold mt-2">وضع الحدود الحرجة</h3>
+                    </div>
+                    <div class="haccp-step bg-white p-4 rounded-lg shadow-sm text-center cursor-pointer border-2 border-transparent hover:border-sky-500 hover:shadow-lg transition">
+                        <div class="text-3xl font-bold text-sky-600">4</div>
+                        <h3 class="font-semibold mt-2">إنشاء نظام رصد</h3>
+                    </div>
+                    <div class="haccp-step bg-white p-4 rounded-lg shadow-sm text-center cursor-pointer border-2 border-transparent hover:border-sky-500 hover:shadow-lg transition">
+                        <div class="text-3xl font-bold text-sky-600">5</div>
+                        <h3 class="font-semibold mt-2">تحديد الإجراءات التصحيحية</h3>
+                    </div>
+                    <div class="haccp-step bg-white p-4 rounded-lg shadow-sm text-center cursor-pointer border-2 border-transparent hover:border-sky-500 hover:shadow-lg transition">
+                        <div class="text-3xl font-bold text-sky-600">6</div>
+                        <h3 class="font-semibold mt-2">وضع إجراءات التحقق</h3>
+                    </div>
+                    <div class="haccp-step bg-white p-4 rounded-lg shadow-sm text-center cursor-pointer border-2 border-transparent hover:border-sky-500 hover:shadow-lg transition">
+                        <div class="text-3xl font-bold text-sky-600">7</div>
+                        <h3 class="font-semibold mt-2">التوثيق وحفظ السجلات</h3>
+                    </div>
+                </div>
+                <div id="haccp-details" class="mt-6 bg-sky-50 p-6 rounded-lg border border-sky-200 min-h-[100px]">
+                    <p class="text-gray-700 text-lg">انقر على إحدى الخطوات لعرض شرحها.</p>
+                </div>
+            </section>
+
+            <section id="penalties" class="content-section">
+                <h2 class="text-4xl font-bold text-sky-800 mb-2">تكلفة عدم الامتثال</h2>
+                <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                    ينص القانون على عقوبات رادعة للمخالفين تتدرج من الغرامات المالية الكبيرة إلى الحبس. استكشف المخطط البياني التفاعلي التالي لمقارنة شدة العقوبات المالية لأبرز المخالفات.
+                </p>
+                <div class="bg-white p-4 rounded-xl shadow-md mb-6">
+                    <div class="flex justify-center items-center space-x-4 mb-4">
+                        <button id="singleBranchBtn" class="px-6 py-2 bg-sky-700 text-white font-semibold rounded-lg shadow-md hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-75 transition">منشأة بدون فروع</button>
+                        <button id="multiBranchBtn" class="px-6 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 transition">منشأة ذات فروع</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="penaltiesChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="licensing" class="content-section">
+                 <h2 class="text-4xl font-bold text-sky-800 mb-6">الطريق إلى الترخيص</h2>
+                 <p class="text-lg text-gray-600 leading-relaxed mb-8">
+                    الحصول على ترخيص تداول الغذاء من الهيئة هو الخطوة الأولى والأساسية لبدء أي نشاط غذائي. توضح هذه الوحدة الخطوات العملية والمستندات المطلوبة لإتمام عملية التسجيل بنجاح عبر البوابة الرقمية للهيئة.
+                </p>
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold text-sky-700 mb-6">قائمة المستندات الأساسية المطلوبة للتسجيل</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                        <div class="flex items-start">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <p class="mr-3 text-gray-700">مستخرج حديث وساري من <strong>السجل التجاري</strong>.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <p class="mr-3 text-gray-700">صورة سارية من <strong>البطاقة الضريبية</strong>.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <p class="mr-3 text-gray-700">ما يثبت <strong>الكيان القانوني للشركة</strong> (مثل عقد التأسيس).</p>
+                        </div>
+                         <div class="flex items-start">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <p class="mr-3 text-gray-700">صورة من <strong>إثبات الشخصية</strong> للمالك أو الممثل القانوني.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <p class="mr-3 text-gray-700"><strong>عقد إيجار أو تمليك</strong> للمقر، مثبت التاريخ.</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <p class="mr-3 text-gray-700"><strong>رسم هندسي</strong> للمنشأة معتمد من مهندس نقابي.</p>
+                        </div>
+                        <div class="flex items-start">
+                             <span class="text-green-500 mt-1">✓</span>
+                            <p class="mr-3 text-gray-700">بيان تفصيلي بـ <strong>الأنشطة والمنتجات</strong> التي يتم تداولها.</p>
+                        </div>
+                         <div class="flex items-start">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <p class="mr-3 text-gray-700">ما يثبت ملكية <strong>العلامة التجارية</strong> (إن وجدت).</p>
+                        </div>
+                    </div>
+                     <div class="mt-8 bg-amber-50 border-r-4 border-amber-400 p-4 rounded">
+                        <h4 class="font-bold text-amber-800">ملاحظة هامة لقطاع الفنادق والسياحة (قرار 12 لسنة 2020)</h4>
+                        <p class="text-amber-700 mt-2">يجب على المنشآت الفندقية والسياحية الجديدة تقديم الرسومات الهندسية للهيئة لمراجعتها والحصول على موافقة مسبقة <strong>قبل</strong> البدء في أعمال الإنشاء أو التجديد.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+
+                    navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    link.classList.add('active');
+
+                    contentSections.forEach(section => {
+                        if (section.id === targetId) {
+                            section.classList.add('active');
+                        } else {
+                            section.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            const haccpSteps = document.querySelectorAll('.haccp-step');
+            const haccpDetailsContainer = document.getElementById('haccp-details');
+            const haccpDescriptions = [
+                "تحديد جميع المخاطر البيولوجية أو الكيميائية أو الفيزيائية المحتملة في كل خطوة من خطوات العملية، وتقييم مدى احتمالية حدوثها وشدة تأثيرها.",
+                "تحديد النقاط في العملية التي يكون التحكم فيها ضرورياً لمنع أو القضاء على خطر يهدد سلامة الغذاء أو تقليله إلى مستوى مقبول.",
+                "وضع حدود قصوى أو دنيا (مثل درجة حرارة، وقت، مستوى رطوبة) يجب الالتزام بها في كل نقطة تحكم حرجة لضمان السيطرة على الخطر.",
+                "تأسيس نظام للملاحظة أو القياس المجدول لنقاط التحكم الحرجة للتأكد من أنها ضمن الحدود الحرجة الموضوعة.",
+                "تحديد الإجراءات التي يجب اتخاذها عندما يشير الرصد إلى أن نقطة تحكم حرجة معينة قد خرجت عن السيطرة (تجاوزت الحدود الحرجة).",
+                "تطبيق طرق وإجراءات واختبارات، بالإضافة إلى الرصد، للتأكد من أن نظام الهاسب يعمل بفعالية وكما هو مخطط له.",
+                "إنشاء نظام لحفظ السجلات والوثائق التي توثق جميع الإجراءات المتعلقة بخطة الهاسب، بما في ذلك سجلات الرصد والإجراءات التصحيحية والتحقق."
+            ];
+
+            haccpSteps.forEach((step, index) => {
+                step.addEventListener('click', () => {
+                    haccpSteps.forEach(s => s.classList.remove('bg-sky-100', 'border-sky-500'));
+                    step.classList.add('bg-sky-100', 'border-sky-500');
+                    haccpDetailsContainer.innerHTML = `<h4 class="text-xl font-bold text-sky-800 mb-2">${step.querySelector('h3').innerText}</h4><p class="text-gray-700 text-lg">${haccpDescriptions[index]}</p>`;
+                });
+            });
+
+            const penaltiesData = {
+                labels: [
+                    'غش الغذاء أو تداول غذاء ضار',
+                    'تداول غذاء غير صالح للاستهلاك',
+                    'الإعلان المضلل عن الغذاء',
+                    'تداول الغذاء بدون ترخيص',
+                    'منع أو إعاقة المفتش'
+                ],
+                singleBranch: {
+                    min: [100000, 100000, 20000, 50000, 15000],
+                    max: [1000000, 1000000, 300000, 500000, 100000]
+                },
+                multiBranch: {
+                    min: [300000, 300000, 50000, 100000, 50000],
+                    max: [3000000, 3000000, 500000, 1000000, 200000]
+                },
+                prison: [
+                    'الحبس من سنتين إلى 5 سنوات',
+                    'الحبس من سنتين إلى 5 سنوات',
+                    'تعليق الترخيص',
+                    '-',
+                    '-'
+                ]
+            };
+
+            const ctx = document.getElementById('penaltiesChart').getContext('2d');
+            let penaltiesChart;
+
+            function createOrUpdateChart(dataType) {
+                const data = penaltiesData[dataType];
+                const chartData = {
+                    labels: penaltiesData.labels,
+                    datasets: [{
+                        label: `الحد الأقصى للغرامة (جنيه مصري)`,
+                        data: data.max,
+                        backgroundColor: 'rgba(3, 105, 161, 0.7)',
+                        borderColor: 'rgba(3, 105, 161, 1)',
+                        borderWidth: 1
+                    }]
+                };
+
+                const config = {
+                    type: 'bar',
+                    data: chartData,
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const index = context.dataIndex;
+                                        const minFine = data.min[index].toLocaleString('ar-EG');
+                                        const maxFine = data.max[index].toLocaleString('ar-EG');
+                                        const prisonInfo = penaltiesData.prison[index];
+                                        let label = `الغرامة: من ${minFine} إلى ${maxFine} جنيه`;
+                                        if (prisonInfo !== '-') {
+                                            label += ` | العقوبة الأخرى: ${prisonInfo}`;
+                                        }
+                                        return label;
+                                    }
+                                },
+                                bodyFont: {
+                                    family: 'Cairo',
+                                    size: 14,
+                                },
+                                titleFont: {
+                                     family: 'Cairo',
+                                     size: 16,
+                                },
+                                rtl: true,
+                                yAlign: 'bottom',
+                                xAlign: 'center',
+                                displayColors: false,
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return (value / 1000) + ' ألف';
+                                    },
+                                    font: {
+                                        family: 'Cairo'
+                                    }
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    font: {
+                                        family: 'Cairo',
+                                        size: 14,
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+                
+                if (penaltiesChart) {
+                    penaltiesChart.destroy();
+                }
+                penaltiesChart = new Chart(ctx, config);
+            }
+
+            const singleBranchBtn = document.getElementById('singleBranchBtn');
+            const multiBranchBtn = document.getElementById('multiBranchBtn');
+
+            singleBranchBtn.addEventListener('click', () => {
+                createOrUpdateChart('singleBranch');
+                singleBranchBtn.classList.add('bg-sky-700', 'text-white');
+                singleBranchBtn.classList.remove('bg-gray-200', 'text-gray-800');
+                multiBranchBtn.classList.add('bg-gray-200', 'text-gray-800');
+                multiBranchBtn.classList.remove('bg-sky-700', 'text-white');
+            });
+
+            multiBranchBtn.addEventListener('click', () => {
+                createOrUpdateChart('multiBranch');
+                multiBranchBtn.classList.add('bg-sky-700', 'text-white');
+                multiBranchBtn.classList.remove('bg-gray-200', 'text-gray-800');
+                singleBranchBtn.classList.add('bg-gray-200', 'text-gray-800');
+                singleBranchBtn.classList.remove('bg-sky-700', 'text-white');
+            });
+
+            createOrUpdateChart('singleBranch');
+        });
+    </script>
+</body>
+</html>
